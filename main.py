@@ -3,20 +3,22 @@ import random
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtGui import QPainter, QColor
 from PyQt6.QtWidgets import QApplication, QWidget
+from ui import Ui_MainWindow
 
 
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.circles = []
-        uic.loadUi('ui.ui', self)
+        self.setupUi(self)
         self.pushButton.clicked.connect(self.add_circle)
 
     def paintEvent(self, event):
         painter = QPainter(self)
         for circle in self.circles:
-            painter.setBrush(QColor(255, 255, 0))  # Желтый цвет
-            painter.drawEllipse(circle[0], circle[1], circle[2], circle[2])  # Рисуем окружность
+            painter.setBrush(
+                QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+            painter.drawEllipse(circle[0], circle[1], circle[2], circle[2])
 
     def add_circle(self):
         diameter = random.randint(10, 50)
